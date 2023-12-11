@@ -1,0 +1,125 @@
+﻿@using ProjektAplikacjaBudowlanka.Models.AuthenticationModels
+@model RegisterModel
+
+<h2>Rejestracja</h2>
+<form method="post" asp-action="Register">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    
+    <div class="form-container">
+        <div class="form-row">
+            <div class="form-group full-width">
+                <label asp-for="Login" class="control-label"></label>
+                <input asp-for="Login" class="form-control" />
+                <div id="LoginSpan" class="text-danger">@ViewData["LoginSpan"]</div>
+
+            </div>
+
+<<<<<<< HEAD
+            <div class="form-group full-width">
+                <label asp-for="Haslo" class="control-label"></label>
+                <input asp-for="Haslo" type="password" class="form-control" />
+                <div id="HasloSpan" class="text-danger">@ViewData["HasloSpan"]</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Rodzaj"></label>
+            <select id="Rodzaj" asp-for="Rodzaj" class="form-select">
+                <option value="Klient">Klient</option>
+                <option value="Firma">Firma</option>
+            </select>
+        </div>
+
+        <div id="klientFields" style="display:block;">
+            <div class="form-row">
+                <div class="form-group full-width">
+                    <label asp-for="Imie"></label>
+                    <input asp-for="Imie" class="form-control" />
+                    <div id="ImieSpan" class="text-danger">@ViewData["ImieSpan"]</div>
+
+                </div>
+
+                <div class="form-group full-width">
+                    <label asp-for="Nazwisko"></label>
+                    <input asp-for="Nazwisko" class="form-control" />
+                    <div id="NazwiskoSpan" class="text-danger">@ViewData["NazwiskoSpan"]</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="firmaFields" style="display:none;">
+            <div class="form-row">
+                <div class="form-group full-width">
+                    <label asp-for="NazwaFirmy">Nazwa firmy</label>
+                    <input asp-for="NazwaFirmy" class="form-control" />
+                    <div id="NazwaFirmySpan" class="text-danger">@ViewData["NazwaFirmySpan"]</div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label asp-for="NIP">NIP</label>
+                    <input asp-for="NIP" type="number" class="form-control" />
+                    <span asp-validation-for="NIP" class="text-danger"></span>
+                    <div id="NIPSpan" class="text-danger">@ViewData["NIPSpan"]</div>
+                </div>
+            </div>
+=======
+    <div class="form-group">
+        <label asp-for="Rodzaj"></label>
+        <select id="Rodzaj" asp-for="Rodzaj" class="form-control">
+            <option value="Klient">Klient</option>
+            <option value="Firma">Firma</option>
+        </select>
+    </div>
+
+    <div id="klientFields" style="display:block;">
+        <div class="form-group">
+            <label asp-for="Imie"></label>
+            <span id="ImieSpan" class="text-danger">@ViewData["ImieSpan"]</span>
+            <input asp-for="Imie" class="form-control" />
+           
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Nazwisko"></label>
+            <span id="NazwiskoSpan" class="text-danger">@ViewData["NazwiskoSpan"]</span>
+            <input asp-for="Nazwisko" class="form-control" />
+        </div>
+    </div>
+
+    <div id="firmaFields" style="display:none;">
+        <div class="form-group">
+            <label asp-for="NazwaFirmy">Nazwa firmy</label>
+            <span id="NazwaFirmySpan" class="text-danger">@ViewData["NazwaFirmySpan"]</span>
+            <input asp-for="NazwaFirmy" class="form-control"/>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="NIP">NIP</label>
+            <span id="NIPSpan" class="text-danger">@ViewData["NIPSpan"]</span>
+            <input asp-for="NIP" type = "number" class="form-control" />
+            <span asp-validation-for="NIP" class="text-danger"></span>
+>>>>>>> 00d653865c8f46965b877b509419c2490813b7da
+        </div>
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-primary">Zarejestruj</button>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#Rodzaj").change(function () {
+                var userType = $("#Rodzaj").val();
+                if (userType == "Klient") {
+                    $("#klientFields").show();
+                    $("#firmaFields").hide();
+                   
+                } else {
+                    $("#klientFields").hide();
+                    $("#firmaFields").show();
+                }
+            });
+        });
+    </script>
+}

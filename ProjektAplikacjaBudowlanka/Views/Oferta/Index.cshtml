@@ -1,0 +1,73 @@
+﻿@using ProjektAplikacjaBudowlanka.Models.DTO.Oferta
+
+@model List<OfertaSelectDTO>
+
+<h2>Lista Ofert</h2>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if(Model.Count == 0)
+{
+    <p>Brak ofert</p>
+}
+else
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>Firma</th>
+            <th>Nazwa</th>
+            <th>Opis</th>
+            <th>Dniówka</th>
+            <th>Liczba rezerwacji</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var oferta in Model)
+        {
+            <tr>
+                <td>@oferta.Ekipa</td>
+                <td>@oferta.Nazwa</td>
+                <td>@oferta.Opis</td>
+                <td>@oferta.Dniowka</td>
+                <td>@oferta.IloscRezerwacji</td>
+                    @if (User.IsInRole("Klient"))
+                    {
+                        <td>
+                            <a asp-action="BookOferta" asp-route-id="@oferta.Id" class="btn btn-danger">Rezerwuj</a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <a asp-action="UpdateOferta" asp-route-id="@oferta.Id" class="btn btn-secondary">Modyfikuj</a>
+                        </td>
+                        @if(oferta.IloscRezerwacji>0)
+                        {
+                            <td>
+                                <button type="button" class="btn btn-danger" disabled>Usuń</button>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <a asp-action="DeleteOferta" asp-route-id="@oferta.Id" class="btn btn-danger">Usuń</a>
+                            </td>
+                        }
+                      
+                    }
+                    
+            </tr>
+        }
+    </tbody>
+    
+</table>
+}
+@if (User.IsInRole("Firma"))
+{
+    <a asp-action="AddOferta" asp-controller="Oferta" class="btn btn-primary">Dodaj nową ofertę</a>
+}
