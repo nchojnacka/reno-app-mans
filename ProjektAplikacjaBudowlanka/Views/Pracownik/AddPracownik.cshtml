@@ -1,0 +1,29 @@
+﻿@model ProjektAplikacjaBudowlanka.Models.DTO.Pracownik.PracownikAddDTO;
+<h2>Nowy pracownik</h2>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+<form asp-action="AddPracownik" method="post">
+    <div class="form-group">
+        <label asp-for="Imie">Imię:</label>
+        <span id="ImieSpan" class="text-danger">@ViewData["ImieSpan"]</span>
+        <input asp-for="Imie" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Nazwisko">Nazwisko:</label>
+        <span id="NazwiskoSpan" class="text-danger">@ViewData["NazwiskoSpan"]</span>
+        <input asp-for="Nazwisko" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Stanowisko">Stanowisko:</label>
+        <span id="StanowiskoSpan" class="text-danger">@ViewData["StanowiskoSpan"]</span>
+        <input asp-for="Stanowisko" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Dodaj pracownika</button>
+</form>

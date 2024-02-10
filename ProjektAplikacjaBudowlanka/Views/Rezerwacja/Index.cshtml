@@ -1,0 +1,130 @@
+﻿@using ProjektAplikacjaBudowlanka.Models.DTO.Rezerwacja
+@model List<RezerwacjaSelectDTO>
+
+@if (User.IsInRole("Klient"))
+{
+    <h2>Lista moich rezerwacji</h2>
+}
+else
+{
+    <h2>Lista rezerwacji na oferty</h2>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+@if (Model.Count == 0)
+{
+    <p>Brak rezerwacji</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ekipa</th>
+                <th>Nazwa</th>
+                <th>Opis</th>
+                <th>Status</th>
+                <th>Data od</th>
+                <th>Data do</th>
+                <th>Koszt</th>
+                <th>Zapłacone</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rez in Model)
+            {
+                <tr>
+                    <td>@rez.Ekipa</td>
+                    <td>@rez.Nazwa</td>
+                    <td>@rez.Opis</td>
+                    <td>@rez.Status</td>
+                    <td>@rez.DataOd.Day.ToString("D2").@rez.DataOd.Month.ToString("D2").@rez.DataOd.Year</td>
+                    <td>@rez.DataDo.Day.ToString("D2").@rez.DataDo.Month.ToString("D2").@rez.DataDo.Year</td>
+                    <td>@rez.Koszt</td>
+                    <td>@rez.CzyZaplacone</td>
+                    <td>
+                        @if (User.IsInRole("Klient"))
+                        {
+
+                            @if (!rez.CzyZaplacone)
+                            {
+                                <a asp-action="PayRezerwacja" asp-route-id="@rez.IdRezerwacja" class="btn btn-success">Zapłać</a>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-success" disabled>Zapłać</button>
+                            }
+                            @if (rez.Status == "Anulowano" || (rez.Status == "Zakończono" && rez.CzyZaplacone))
+                            {
+                                <button type="button" class="btn btn-danger" disabled>Anuluj</button>
+                            }
+                            else
+                            {
+                                <a asp-action="CancelRezerwacja" asp-route-id="@rez.IdRezerwacja" class="btn btn-danger">Anuluj</a>   
+                            }
+                        }
+                        else
+                        {
+                            @if (rez.Status == "Utworzono")
+                            {
+                                <a asp-action="StartRezerwacja" asp-route-id="@rez.IdRezerwacja" class="btn btn-primary">Rozpocznij</a>
+                            }
+                            else
+                            {
+
+                                <button type="button" class="btn btn-primary" disabled>Rozpocznij</button>
+
+                            }
+                            @if (rez.Status == "Rozpoczęto")
+                            {
+
+                                <a asp-action="EndRezerwacja" asp-route-id="@rez.IdRezerwacja" class="btn btn-warning">Zakończ</a>
+
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-warning" disabled>Zakończ</button>
+                            }
+
+                            @if (rez.Status != "Anulowano")
+                            {
+
+                                <a asp-action="CancelRezerwacja" asp-route-id="@rez.IdRezerwacja" class="btn btn-danger">Anuluj</a>
+
+                            }
+                            else
+                            {
+
+                                <button type="button" class="btn btn-danger" disabled>Anuluj</button>
+
+                            }
+                            @if (rez.Status != "Rozpoczęto")
+                            {
+
+                                <a asp-action="DeleteRezerwacja" asp-route-id="@rez.IdRezerwacja" class="btn btn-danger">Usuń</a>
+
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-danger" disabled>Usuń</button>
+                            }
+                        }
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}

@@ -1,0 +1,29 @@
+﻿@model ProjektAplikacjaBudowlanka.Models.DTO.Oferta.OfertaAddDTO;
+<h2>Nowa Oferta</h2>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+<form asp-action="AddOferta" method="post">
+    <div class="form-group">
+        <label asp-for="Nazwa">Nazwa:</label>
+        <span id="NazwaSpan" class="text-danger">@ViewData["NazwaSpan"]</span>
+        <input asp-for="Nazwa" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Opis">Opis:</label>
+        <span id="NazwiskoSpan" class="text-danger">@ViewData["OpisSpan"]</span>
+        <input asp-for="Opis" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Dniowka">Dniówka:</label>
+        <span id="NazwiskoSpan" class="text-danger">@ViewData["DniowkaSpan"]</span>
+        <input asp-for="Dniowka" class="form-control" type ="number" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Dodaj ofertę</button>
+</form>

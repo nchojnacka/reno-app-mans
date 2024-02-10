@@ -1,0 +1,41 @@
+﻿@using ProjektAplikacjaBudowlanka.Models.DTO.Opinia
+@model List<OpiniaSelectDTO>
+
+<h2>Opinie</h2>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if(Model.Count == 0)
+{
+    <p>Brak opinii</p>
+}
+else
+{
+<table class="table">
+    <thead>
+        <tr>
+                <th>Opis</th>
+                <th>Ocena</th>
+                <th>Login</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var opinia in Model)
+        {
+            <tr>
+                    <td>@opinia.Opis</td>
+                    <td>@opinia.Ocena</td>
+                    <td>@opinia.Login</td>
+            </tr>
+        }
+    </tbody>
+    
+</table>
+}
+@if (User.IsInRole("Klient"))
+{
+    <a asp-action="AddOpinia" asp-route-id="@ViewBag.Id" asp-controller="Opinia" class="btn btn-primary">Dodaj opinie</a>
+}
